@@ -1,0 +1,27 @@
+.destinations-wrapper {
+  padding: 30px;
+}
+
+.detination-images {
+  width: 300px;
+  height: 225px;
+}
+.destination {
+  display: inline-block;
+}
+
+.destination h3 {
+  text-transform: capitalize;
+}
+
+.twitterButton {
+  height: 50px;
+  background: #1d9bf0;
+  border: none;
+  color: white;
+  font-size: 17px;
+  font-weight: 600;
+  padding-left: 60px;
+  padding-right: 60px;
+  border-radius: 99999px;
+}

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <style>
+      #heading {
+        text-align: center;
+        color: rgb(23, 143, 156);
+      }
+
+      .calculator {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 10px;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .calculator button {
+        font-size: 24px;
+        padding: 10px;
+        background-color: #ccc;
+        border: none;
+        cursor: pointer;
+      }
+
+      .calculator .display {
+        grid-column: 1 / -1;
+        background-color: #eee;
+        padding: 10px;
+        text-align: right;
+        font-size: 32px;
+        border: none;
+        min-height: 37px;
+      }
+
+      .calculator button.clear {
+        grid-column: span 2;
+      }
+
+      .calculator button.equals {
+        grid-column: span 2;
+        background-color: #f90;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="heading">My Calculator</h1>
+    <div class="calculator">
+      <div class="display"></div>
+      <button class="clear">C</button>
+      <button class="operator">/</button>
+      <button class="operator">*</button>
+      <button class="number">7</button>
+      <button class="number">8</button>
+      <button class="number">9</button>
+      <button class="operator">-</button>
+      <button class="number">4</button>
+      <button class="number">5</button>
+      <button class="number">6</button>
+      <button class="operator">+</button>
+      <button class="number">1</button>
+      <button class="number">2</button>
+      <button class="number">3</button>
+      <button class="equals">&nbsp;=</button>
+      <button class="number">0</button>
+      <button class="decimal">.</button>
+    </div>
+    <script>
+      const display = document.querySelector(".display");
+      const clearBtn = document.querySelector(".clear");
+      const equalsBtn = document.querySelector(".equals");
+      const operatorBtns = document.querySelectorAll(".operator");
+      const numberBtns = document.querySelectorAll(".number");
+      const decimalBtn = document.querySelector(".decimal");
+
+      let firstOperand = "";
+      let secondOperand = "";
+      let currentOperation = null;
+
+      function updateDisplay() {
+        display.textContent =
+          firstOperand +
+          (currentOperation ? ` ${currentOperation} ` : "") +
+          secondOperand;
+      }
+
+      function clear() {
+        firstOperand = "";
+        secondOperand = "";
+        currentOperation = null;
+        updateDisplay();
+      }
+
+      function appendNumber(number) {
+        if (number === "." && secondOperand.includes(".")) return;
+        secondOperand += number;
+        updateDisplay();
+      }
+
+      function setOperation(operation) {
+        if (currentOperation !== null) {
+          performOperation();
+        }
+        currentOperation = operation;
+        firstOperand = secondOperand;
+        secondOperand = "";
+        updateDisplay();
+      }
+
+      function performOperation() {
+        if (currentOperation === null) return;
+        switch (currentOperation) {
+          case "+":
+            secondOperand = String(
+              parseFloat(firstOperand) + parseFloat(secondOperand)
+            );
+            break;
+          case "-":
+            secondOperand = String(
+              parseFloat(firstOperand) - parseFloat(secondOperand)
+            );
+            break;
+          case "*":
+            secondOperand = String(
+              parseFloat(firstOperand) * parseFloat(secondOperand)
+            );
+            break;
+          case "/":
+            secondOperand = String(
+              parseFloat(firstOperand) / parseFloat(secondOperand)
+            );
+            break;
+          default:
+            return;
+        }
+        currentOperation = null;
+        display.textContent = secondOperand;
+      }
+
+      numberBtns.forEach((button) => {
+        button.addEventListener("click", () => {
+          appendNumber(button.textContent);
+        });
+      });
+
+      operatorBtns.forEach((button) => {
+        button.addEventListener("click", () => {
+          setOperation(button.textContent);
+        });
+      });
+
+      equalsBtn.addEventListener("click", performOperation);
+
+      decimalBtn.addEventListener("click", () => {
+        appendNumber(".");
+      });
+
+      clearBtn.addEventListener("click", clear);
+    </script>
+  </body>
+</html>

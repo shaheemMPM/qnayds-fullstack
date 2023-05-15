@@ -1,0 +1,4 @@
+Node/mongo-test/node_modules
+Node/travelapp-api/node_modules
+React/travelapp/node_modules
+.DS_Store
